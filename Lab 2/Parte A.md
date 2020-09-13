@@ -12,9 +12,11 @@ A execução do laboratório foi gravada no formato _asciinema_ (gravação do t
 ## Ambiente
 
 O Laboratório foi executado no seguinte ambiente:
-- a
-- b
-- c
+- **Sistema Operacional**: Arch Linux (x64)
+    - **Kernel**: 5.8.8-arch1-1
+- **CPU**: Intel i7-6500U
+- **RAM**: 8 GB
+- **GPU**: Intel Skylake GT2 [HD Graphics 520]
 
 
 ## Execução passo-a-passo:
