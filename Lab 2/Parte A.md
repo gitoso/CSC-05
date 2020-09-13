@@ -81,47 +81,90 @@ Link para o VagrantCloud: [https://app.vagrantup.com/boxes/search](https://app.v
 ![10](images/10.png)
 
 ### 11) Entre no virtualbox e verifique que sua maquina virtual esta rodando.
+---
 
-
-
-![](images/.png)
+![11](images/11.png)
 
 ### 12) Vamos logar na maquina agora via SSH
+```
+# vagrant ssh
+```
+---
 
-![](images/.png)
+![12](images/12.png)
 
 ### 13) Dentro da máquina virtual verifique diversas características da VM
+```
+# free -h
+# df -h
+# sudo fdisk -l
+```
+---
 
-![](images/.png)
+![13](images/13.png)
 
 ### 14) Dentro da maquina virtual atualize o sistema e instale o htop
+```
+# sudo apt update
+# sudo apt upgrade
+# sudo apt install htop
+```
+---
 
-![](images/.png)
+![14](images/14.png)
+
+Executando o `htop` só para verificar:
+
+![14](images/14-1.png)
 
 ### 15) Saia da maquina guest VM de volta para o host
+```
+# exit
+```
+---
 
-![](images/.png)
+![15](images/15.png)
 
 ### 16) Verifique o estado da VM perante o vagrant
+```
+# vagrant status
+```
+---
 
-![](images/.png)
+![16](images/16.png)
 
 ### 17) Verificar as boxes instaladas
+```
+# vagrant box list
+```
+---
 
-![](images/.png)
+![17](images/17.png)
 
 ### 18) Desligue a maquina virtual de maneira "suave"
+```
+# vagrant halt
+```
+---
 
-![](images/.png)
+![18](images/18.png)
+
+Verificando o estado da VM no VirtualBox:
+
+![18-1](images/18-1.png)
 
 ### 19) Destrua / Limpe a VM e a box dentro dela, liberando espaço e recursos
+```
+# vagrant destroy
+# vagrant box list
+```
+---
 
-![](images/.png)
+![19](images/19.png)
 
 # Parte II: VM Windows
 
 **Gravação**:
-- Vídeo: [...](...)
 - Asciinema: [...](...)
 
 A seguir, a execução dos passos do laboratório será seguida por _screenshots_ mostrando o resultado obtido para cada passo.
