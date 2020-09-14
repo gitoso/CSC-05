@@ -5,8 +5,7 @@ Neste relatório serão descritos os passos realizados ao seguir o roteiro dispo
 A execução do laboratório foi gravada no formato _asciinema_ (gravação do terminal, sem intervalo entre comandos). Para cada subseção à seguir, serão disponibilizados os links referentes as gravações.
 
 O Laboratório foi executado no seguinte ambiente:
-- **Sistema Operacional**: Arch Linux (x64)
-    - **Kernel**: 5.8.8-arch1-1
+- **Sistema Operacional**: Arch Linux x64 (5.8.8-arch1-1)
 - **CPU**: Intel i7-6500U
 - **RAM**: 8 GB
 - **GPU**: Intel Skylake GT2 [HD Graphics 520]
@@ -15,19 +14,19 @@ O Laboratório foi executado no seguinte ambiente:
 **Tabela de Conteúdos**:
 <!-- vscode-markdown-toc -->
 * [Parte I: Introdução](#ParteI:Introduo)
-	* [Gravação:](#Gravao:)
-	* [Execução passo-a-passo:](#Execuopasso-a-passo:)
+    * [Gravação:](#Gravao:)
+    * [Execução passo-a-passo:](#Execuopasso-a-passo:)
 * [Parte II: VM Windows](#ParteII:VMWindows)
-	* [Gravação](#Gravao)
-	* [Execução passo-a-passo](#Execuopasso-a-passo)
+    * [Gravação](#Gravao)
+    * [Execução passo-a-passo](#Execuopasso-a-passo)
 * [Parte III: "Mini-Cluster"](#ParteIII:Mini-Cluster)
-	* [Gravação](#Gravao-1)
-	* [Execução passo-a-passo](#Execuopasso-a-passo-1)
+    * [Gravação](#Gravao-1)
+    * [Execução passo-a-passo](#Execuopasso-a-passo-1)
 
 <!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
+    numbering=false
+    autoSave=true
+    /vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
 ---
@@ -52,7 +51,7 @@ No caso executei o Laboratório em um ambiente Linux (Arch Linux x64) e portanto
 
 ![3](images/3.png)
 
-#### <a name='Verificarasboxesinstaladas'></a>4) Verificar as “boxes” instaladas
+#### <a name='Verificarasboxesinstaladas'></a>4) Verificar as "boxes" instaladas
 ```
 # vagrant box list
 ```
@@ -60,7 +59,7 @@ No caso executei o Laboratório em um ambiente Linux (Arch Linux x64) e portanto
 
 ![4](images/4.png)
 
-#### <a name='Criarumdiretriocomonomeubuntu18eentrarnessediretrio'></a>5) Criar um diretório com o nome “ubuntu18” e entrar nesse diretório
+#### <a name='Criarumdiretriocomonomeubuntu18eentrarnessediretrio'></a>5) Criar um diretório com o nome "ubuntu18" e entrar nesse diretório
 ```
 # cd Documentos
 # mkdir ubuntu18
@@ -90,7 +89,7 @@ Link para o VagrantCloud: [https://app.vagrantup.com/boxes/search](https://app.v
 
 ![8](images/8.png)
 
-#### <a name='Usandoeditordetextomodificaroboxparaubuntubionic64'></a>9) Usando editor de texto, modificar o “box” para ubuntu/bionic64
+#### <a name='Usandoeditordetextomodificaroboxparaubuntubionic64'></a>9) Usando editor de texto, modificar o "box" para ubuntu/bionic64
 ---
 
 ![9](images/9.png)
@@ -187,27 +186,125 @@ Verificando o estado da VM no VirtualBox:
 ## <a name='ParteII:VMWindows'></a>Parte II: VM Windows
 
 ### <a name='Gravao'></a>Gravação
-- Asciinema: [...](...)
+- Asciinema: [https://asciinema.org/a/359543](https://asciinema.org/a/359543)
 
 A seguir, a execução dos passos do laboratório será seguida por _screenshots_ mostrando o resultado obtido para cada passo.
 
 ### <a name='Execuopasso-a-passo'></a>Execução passo-a-passo
 
-#### <a name='Crieumdiretriowindows2010emDocumentos'></a>20) Crie um diretório “windows2010” em Documentos
+#### <a name='Crieumdiretriowindows2010emDocumentos'></a>20) Crie um diretório "windows2010" em Documentos
+```
+# cd Documentos
+# mkdir windows2010
+# cd windows2010
+```
+---
 
-#### <a name='CrieumarquivoVagrantfiledozerocontendoocdigofornecido'></a>21) Crie um arquivo Vagrantfile do zero contendo o código fornecido
+![20](images/20.png)
 
-#### <a name='Crieumsegundoarquivodetextocomonomerdp.ps1ecoloquenomesmodiretrio'></a>22) Crie um segundo arquivo de texto com o nome “rdp.ps1” e coloque no mesmo diretório
+#### <a name='CrieumarquivoVagrantfiledozerocontendoocdigofornecido'></a>21) Crie um arquivo Vagrantfile do zero contendo o seguinte código
+```
+Vagrant.configure("2") do |config|
+    config.vm.box = "tas50/windows_10"
+    config.vm.hostname = "server"
+    config.vm.provider "virtualbox" do |vb|
+        vb.gui = false
+        vb.memory = 2048
+        vb.cpus = 2
+    end
+    config.vm.network :private_network, ip: "172.16.2.20"
+    config.vm.provision "shell", path: "rdp.ps1"
+end
+```
+---
 
-#### <a name='VerifiqueovirtualboxnovamentevejaaVMWindowsrodando'></a>23) Verifique o virtualbox novamente, veja a VM Windows rodando
+![21-1](images/21-1.png)
+
+![21-2](images/21-2.png)
+
+_(Alterei o IP para terminar com 21)_
+
+#### <a name='Crieumsegundoarquivodetextocomonomerdp.ps1ecoloquenomesmodiretrio'></a>22) Crie um segundo arquivo de texto com o nome "rdp.ps1" e coloque no mesmo diretório
+```
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0 
+Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+Set-TimeZone 'E. South America Standard Time'
+```
+---
+
+![22-1](images/22-1.png)
+
+![22-2](images/22-2.png)
+
+#### <a name='VerifiqueovirtualboxnovamentevejaaVMWindowsrodando'></a>23) Verifique o virtualbox novamente, veja a VM Windows rodando. A opção "vb.gui=false" indica a inicialização "headless". O script "rdp.ps1" habilita a possibilidade de acessar a maquina virtual via Remote Desktop. Se você tiver instalar "Remote Desktop" tente acessar a VM. Se não for possível usar o Remote Desktop, acessar a VM diretamente via Virtualbox.
+```
+# endereço IP: 172.16.2.20
+# porta default: 3389
+# login/senha: vagrant / vagrant
+```
+---
+
+Primeiramente inicializei a VM com o comando `vagrant up`
+
+![23-1](images/23-1.png)
+
+Em seguida realizei o acesso via RDP utilizando um software chamado Remmina
+
+![23-2](images/23-2.png)
+
+![23-3](images/23-3.png)
+
+E foi possível acessar o desktop e verificar que o acesso foi realizado com sucesso
+
+![23-4](images/23-4.png)
 
 #### <a name='Acionarobrowsereinstalarochocolatey'></a>24) Acionar o browser e instalar o "chocolatey"
+```
+# vá no site do chocolatey / Install
+# acione o programa “powershell” com modo administrador
+# copie e cole o comando para instalar o chocolatey a partir do powershell
+```
+---
+
+A instalação do `chocolatey` foi realizada executando o comando mencionado no site oficial
+
+![24](images/24.png)
 
 #### <a name='InstaleobrowserFirefox'></a>25) Instale o browser "Firefox"
+```
+# choco install Firefox
+```
+---
+
+![25](images/25.png)
 
 #### <a name='Reconfiguraramemoriapara1GRAMalterandooarquivoVagrantfileetestarrecarregandoessaconfigurao'></a>26) Reconfigurar a memoria para 1G RAM, alterando o arquivo Vagrantfile e testar recarregando essa configuração
+```
+# vagrant reload
+```
+---
+
+![21-1](images/21-1.png)
+
+![26-1](images/26-1.png)
+
+![26-2](images/26-2.png)
+
+Ao tentar rodar o "provision" novamente, houve um erro pois a opção
+ 
+```
+Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+```
+
+do arquivo `rdp.ps1` exige mais memória RAM que o disponível na nova configuração da VM.
+
+Dessa forma, a única maneira possível de acessar a VM neste caso foi remover esta opção opção do arquivo `rdp.ps1`. Como essa opção habilita o acesso via RDP, a única alternativa de acesso com 1GB de RAM foi o acesso via a própria interface do Virtualbox
+
 
 #### <a name='DestruiraVM'></a>27) Destruir a VM
+---
+![27-1](images/27-1.png)
+![27-2](images/27-2.png)
 
 ## <a name='ParteIII:Mini-Cluster'></a>Parte III: "Mini-Cluster"
 
@@ -228,6 +325,6 @@ A seguir, a execução dos passos do laboratório será seguida por _screenshots
 
 #### <a name='AtualizaroVagrantfileetrocaroboxdavm02porbionic64.EInstalarapache2navm02'></a>32) Atualizar o Vagrantfile e trocar o box da vm02 por bionic64. E Instalar apache2 na vm02
 
-#### <a name='TestaracessaroservidorwebcomobrowserapartirdoHosteapartirdovm01guestusandowgetnoRedHat'></a>33) Testar acessar o servidor web com o browser a partir do Host e a partir do vm01 guest usando “wget” no Red Hat
+#### <a name='TestaracessaroservidorwebcomobrowserapartirdoHosteapartirdovm01guestusandowgetnoRedHat'></a>33) Testar acessar o servidor web com o browser a partir do Host e a partir do vm01 guest usando "wget" no Red Hat
 
 #### <a name='Explorandoumpoucodosplug-insdoVagrant'></a>34) Explorando um pouco dos "plug-ins" do Vagrant
