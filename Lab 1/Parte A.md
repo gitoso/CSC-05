@@ -1,6 +1,6 @@
 # Lab 1: Virtualbox & Vagrant
 
-- **Disciplina:** CSC-05: 
+- **Disciplina:** CSC-05: Operações Cibernéticas e Jogos de Guerra Cibernética - Lado Defesa
 - **Aluno:** Gianluigi Dal Toso
 - **Turma:** 2021
 - **Data:** 22/09/2020
@@ -369,7 +369,7 @@ vagrant up vm02
 sudo apt update
 sudo apt install apache2
 ```
----
+--- 
 
 ![32-1](images/31-1.png)
 
