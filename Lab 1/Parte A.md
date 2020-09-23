@@ -5,11 +5,11 @@
 - **Turma:** 2021
 - **Data:** 22/09/2020
 
-Este relatório também pode ser conferido online (em formato Markdown) pela URL: []()
+Este relatório também pode ser conferido online (em formato Markdown) pela URL: [https://gitlab.com/gitoso/csc-05/-/blob/master/Lab%201/Parte%20A.md](https://gitlab.com/gitoso/csc-05/-/blob/master/Lab%201/Parte%20A.md)
 
 ---
 
-Neste relatório serão descritos os passos realizados ao seguir o roteiro disponível para o _Laboratório 2 - Parte A: Virtualbox e Vagrant_.
+Neste relatório serão descritos os passos realizados ao seguir o roteiro disponível para o _Laboratório 1: Computação em Núvem - Virtualbox/Vagrant_.
 
 A execução do laboratório foi gravada no formato _asciinema_ (gravação do terminal, sem intervalo entre comandos). Para cada subseção à seguir, serão disponibilizados os links referentes as gravações.
 
