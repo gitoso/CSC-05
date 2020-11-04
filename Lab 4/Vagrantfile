@@ -1,0 +1,11 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "tas50/windows_10"
+  config.vm.hostname = "server"
+  config.vm.provider "virtualbox" do |vb|
+  vb.gui = false
+  vb.memory = 2048
+  vb.cpus = 2
+end
+  config.vm.network :private_network, ip: "192.1.2.20"
+  #config.vm.provision "shell", path: "rdp.ps1"
+end
