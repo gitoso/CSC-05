@@ -63,6 +63,7 @@ Após o login, você pode iniciar o osqueryi digitando o seguinte no prompt de c
 
 ---
 **Screenshot**:
+
 ![2](imagens/01-p2.png)
 
 ## <a name='Parte3-Investigando'></a>Parte 3 - Investigando
@@ -76,6 +77,7 @@ O resultado não deve retornar nada.
 
 ---
 **Screenshot**:
+
 ![3a](imagens/01-p3-a.png)
 
 ### <a name='bEseumusuarioabriuumshelledeuumcomandodeFTPmanualmenteVamosverificarissofazendojoindatabeladeshell_historyeusurios.'></a>b) E se um usuario abriu um shell e deu um comando de FTP manualmente? Vamos verificar isso fazendo join da tabela de shell_history e usuários.
@@ -88,6 +90,7 @@ O resultado não deve retornar nada.
 
 ---
 **Screenshot**:
+
 ![3b](imagens/01-p3-b.png)
 
 ### <a name='cProvavelmenteparecequealgumacoisafoiescalonadapararodar.OmecanismoagendadordetarefasdoLinuxocrontab.'></a>c) Provavelmente parece que alguma coisa foi “escalonada” para rodar. O mecanismo agendador de tarefas do Linux é o “crontab”.
@@ -105,6 +108,7 @@ Com o formato tabular é difícil ler os comandos agendados. Usar o comando .mod
 
 ---
 **Screenshot**:
+
 ![3c](imagens/01-p3-c.png)
 
 ### <a name='dCombasenesseendereoIPtalvezpossamostermelhornoodoqueestacontecendocomessamquina.Vamosmodaromododeexibiopara.modeprettyevernovamenteosresultadosdoshellhistory.'></a>d) Com base nesse endereço IP talvez possamos ter melhor noção do que está acontecendo com essa máquina. Vamos modar o modo de exibição para “.mode pretty” e ver novamente os resultados do shell history.
@@ -123,6 +127,7 @@ Note a quantidade de atividade suspeita. Baixou um arquivo com wget, criou um di
 
 ---
 **Screenshot**:
+
 ![3d](imagens/01-p3-d.png)
 
 ### <a name='eVamosinvestigarofirewallesuasregras.'></a>e) Vamos investigar o firewall e suas regras.
@@ -135,6 +140,7 @@ Tem uma regra permitindo tráfego do endereço IP suspeito e esta aberto o firew
 
 ---
 **Screenshot**:
+
 ![3e](imagens/01-p3-e.png)
 
 ### <a name='fVamosinvestigaroprocessoquepotencialmenteestaconectadonessaporta33060.'></a>f) Vamos investigar o processo que potencialmente esta conectado nessa porta 33060.
@@ -151,18 +157,21 @@ Investigando um pouco mais sobre esse processo 1295 temos as seguintes informaç
 
 ---
 **Screenshot**:
+
 ![3f](imagens/01-p3-f.png)
 
 ### <a name='gInvestigandooprocessonginxumaversomodificadadeumservidorwebnginxtemoqueeleumprocessoworkerquefoispawnadoporumprocessopai.Naltimafigurapodemosverificarqueoprocessopaiparentcomnmero1265.'></a>g) Investigando o processo nginx (uma versão modificada de um servidor web nginx) temo que ele é um “processo worker” que foi “spawnado” por um processo pai. Na última figura podemos verificar que o processo pai é “parent” com número 1265.
 
 ---
 **Screenshot**:
+
 ![3g](imagens/01-p3-g.png)
 
 ### <a name='hInvestigandomaisumnvelacimaopaidopaidoprocessomaliciosoestcomPID1251.'></a>h) Investigando mais um nível acima, o pai do pai do processo malicioso está com PID=1251.
 
 ---
 **Screenshot**:
+
 ![3h](imagens/01-p3-h.png)
 
 ### <a name='iParecequefoicriadopelobashdosysadminepareceserummecanismodepersistnciadoarquivomalicioso.Reparequequandoestvamosvendooscomandosdoshellshell_historyhaviaumaEDIOdoarquivo.bashrcporpartedousuriodbbackup..BASHRCexecutandoquandousurioseloga.'></a>i) Parece que foi criado pelo bash do sysadmin, e parece ser um mecanismo de persistência do arquivo malicioso. Repare que quando estávamos vendo os comandos do shell (shell_history) havia uma EDIÇÃO do arquivo .bashrc por parte do usuário dbbackup. .BASHRC é executando quando usuário se loga.
@@ -171,4 +180,5 @@ Finalize com .exit
 
 ---
 **Screenshot**:
+
 ![3i](imagens/01-p3-i.png)
