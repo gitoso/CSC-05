@@ -26,9 +26,13 @@ Para cada sessão do relatórios, será inserida uma captura de tela referente i
 
 
 <!-- vscode-markdown-toc -->
-
-
-COLOCAR UMA TOC AQUI
+* [Pré-Lab: Instalar três VMs, uma com o SIEM, uma com Linux e outra com Windows via vagrant](#Pr-Lab:InstalartrsVMsumacomoSIEMumacomLinuxeoutracomWindowsviavagrant)
+* [Topologia e Instalação da Infraestrutura de Containers e Ansible](#TopologiaeInstalaodaInfraestruturadeContainerseAnsible)
+* [Instalação dos Softwares de Containers para o Fleet](#InstalaodosSoftwaresdeContainersparaoFleet)
+* [Configuração do Ambiente Web do Fleet](#ConfiguraodoAmbienteWebdoFleet)
+* [Instalação dos Softwares Osquery nos endpoints Linux de maneira automatizada e Cadastro Automático no Fleet](#InstalaodosSoftwaresOsquerynosendpointsLinuxdemaneiraautomatizadaeCadastroAutomticonoFleet)
+* [Instalação dos Softwares Osquery nos endpoints Windows de maneira automatizada e Cadastro Automático no Fleet](#InstalaodosSoftwaresOsquerynosendpointsWindowsdemaneiraautomatizadaeCadastroAutomticonoFleet)
+* [Fazendo testes com a plataforma](#Fazendotestescomaplataforma)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -39,7 +43,7 @@ COLOCAR UMA TOC AQUI
 ---
 
 
-## Pré-Lab: Instalar três VMs, uma com o SIEM, uma com Linux e outra com Windows via vagrant
+## <a name='Pr-Lab:InstalartrsVMsumacomoSIEMumacomLinuxeoutracomWindowsviavagrant'></a>Pré-Lab: Instalar três VMs, uma com o SIEM, uma com Linux e outra com Windows via vagrant
 
 1) Vamos verificar que as 3 VMs estão rodando apropriadamente.
 
@@ -74,7 +78,7 @@ A partir de uma máquina (entrando via `vagrant ssh`) é possível pingar a outr
 ![p2b](imagens/p2b.png)
 
 
-## Topologia e Instalação da Infraestrutura de Containers e Ansible
+## <a name='TopologiaeInstalaodaInfraestruturadeContainerseAnsible'></a>Topologia e Instalação da Infraestrutura de Containers e Ansible
 
 Para esse exercício, ao invés de instalarmos e configurarmos os daemons dos sistemas do Fleet, bem como seu banco de dados acessório e outros recursos, vamos, ao invés, fazer uso reforçado de “containers docker” para que nosso SIEM tenha um footprint tal como ilustrado no enunciado do laboratório.
 
@@ -132,7 +136,7 @@ vagrant@fleet:~$ docker-compose version
 ![p4](imagens/p4.png)
 
 
-## Instalação dos Softwares de Containers para o Fleet
+## <a name='InstalaodosSoftwaresdeContainersparaoFleet'></a>Instalação dos Softwares de Containers para o Fleet
 
 O arquivo abaixo é o docker compose necessário para levantar o Kolide Fleet para gerenciar nós com osquery. São necessários 2 bancos de dados, o banco de dados mysql (relacional) e o banco de dados redis (não-relacional). Cada banco de dados é chamada de “services” no docker-compose e tem uma configuração específica, por exemplo uso de senhas, no caso do usuário MYSQL é setada uma senha de root – “toor” (root ao contrário) e um usuário de banco de dados “fleet”.
 
@@ -242,7 +246,7 @@ Se você estiver na mesma maquina que esta a VM, basta abrir o seu browser no en
 **Screenshot:**
 ![p7d](imagens/p7-browser.png)
 
-## Configuração do Ambiente Web do Fleet
+## <a name='ConfiguraodoAmbienteWebdoFleet'></a>Configuração do Ambiente Web do Fleet
 
 8) Acessar o Fleet pelo browser
 
@@ -252,7 +256,7 @@ Se você estiver na mesma maquina que esta a VM, basta abrir o seu browser no en
 
 Copiar a chave secreta (enroll secret), ela vai ser necessário no próximo passo, de instalação dos endpoints. Neste caso eu copiei e salvei em um arquivo local.
 
-## Instalação dos Softwares Osquery nos endpoints Linux de maneira automatizada e Cadastro Automático no Fleet
+## <a name='InstalaodosSoftwaresOsquerynosendpointsLinuxdemaneiraautomatizadaeCadastroAutomticonoFleet'></a>Instalação dos Softwares Osquery nos endpoints Linux de maneira automatizada e Cadastro Automático no Fleet
 
 9) Criação de arquivos de configuração para o Ansible, começando pelo arquivo hosts
 
@@ -489,7 +493,7 @@ vagrant@fleet:~$ ansible-playbook -i hosts update-linux-osqueryd.yml
 **Screenshot:**
 ![p18](imagens/p18.png)
 
-## Instalação dos Softwares Osquery nos endpoints Windows de maneira automatizada e Cadastro Automático no Fleet
+## <a name='InstalaodosSoftwaresOsquerynosendpointsWindowsdemaneiraautomatizadaeCadastroAutomticonoFleet'></a>Instalação dos Softwares Osquery nos endpoints Windows de maneira automatizada e Cadastro Automático no Fleet
 
 19) Instalação de pacotes no controlador para acesso remoto na maquina Windows. Como o acesso é via WINRM, o ansible precisa de um pacote python para instalar o suporte ao winrm, pacote pywinrm.
 
@@ -601,7 +605,7 @@ channel 3: open failed: connect failed: No route to host
 
 ---
 
-## Fazendo testes com a plataforma
+## <a name='Fazendotestescomaplataforma'></a>Fazendo testes com a plataforma
 
 26) Criando uma query que seja executada em todas as máquinas.
 
