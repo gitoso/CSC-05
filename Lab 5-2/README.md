@@ -510,4 +510,105 @@ vagrant@fleet:~$ pip install pywinrm
 
 Copie e cole no powershell administrativo, os 4 comandos em powershell para baixar e configurar o acesso via ANSIBLE para as maquinas Windows.
 
-...
+```
+$url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+$file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+(New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+powershell.exe -ExecutionPolicy ByPass -File $file
+```
+
+O resultado da execução desses comandos vai baixar um arquivo do github do projeto ANSIBLE contendo um script powershell chamado “ConfigureRemotingForAnsible.ps1.
+
+Esse arquivo será baixado para o diretório temp do Windows.
+
+Finalmente ele será executado com permissão de bypassar outras politicas de segurança do Windows.
+
+---
+**Screenshot:**
+![p20](imagens/p20.png)
+
+21) Vamos testar para ver se funcionou, com o ansible na maquina controladora.
+
+---
+**Screenshot:**
+![p21](imagens/p21.png)
+
+22) Instalação do Chocolatey (podia fazer via ansible, mas vamos fazer manualmente, aproveitando o powershell habilitado). O chocolatey vai ser necessário para instalar o osquery daemon como pacote no Windows.
+
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+---
+**Screenshot:**
+![p22a](imagens/p22a.png)
+
+
+Fazer um teste para ver se instala o Firefox por exemplo.
+```
+choco install firefox
+```
+
+---
+**Screenshot:**
+![p22b](imagens/p22b.png)
+
+23) Passos finais são para configurar o arquivo hosts no Windows para que o endereço fleet.local seja legítimo também na maquina Windows como foi no Linux. O comando no powershell é o listado abaixo.
+
+```
+Add-Content -Path C:\Windows\System32\drivers\etc\hosts -Value "10.16.2.25`tfleet.local" -Force
+```
+
+---
+**Screenshot:**
+![p23a](imagens/p23a.png)
+
+24) Finalmente, vamos instalar o osquery daemon no servidor Windows via ANSIBLE. Para isso precisamos criar um arquivo local de “flags” de configuração para o daemon. É uma configuração muito semelhante ao do Linux, obtem-se os certificados e passa-se a chave osquery.key como parâmetro.
+
+```
+--tls_server_certs=C:\Program Files\osquery\certs\certificate.crt
+--enroll_secret_path=C:\Program Files\osquery\osquery.key
+--tls_hostname=fleet.local:8412
+--host_identifier=uuid
+--enroll_tls_endpoint=/api/v1/osquery/enroll
+--config_plugin=tls
+--config_tls_endpoint=/api/v1/osquery/config
+--config_tls_refresh=10
+--disable_distributed=false
+--distributed_plugin=tls
+--distributed_interval=10
+--distributed_tls_max_attempts=3
+--distributed_tls_read_endpoint=/api/v1/osquery/distributed/read
+--distributed_tls_write_endpoint=/api/v1/osquery/distributed/write
+--logger_plugin=tls
+--logger_tls_endpoint=/api/v1/osquery/log
+--logger_tls_period=10
+```
+
+---
+**Screenshot:**
+![p24](imagens/p24.png)
+
+25) E por fim, sucesso.
+
+**Daqui para frente tive problemas em configurar o tunelamento (que antes funcionava e por algum motivo deixou de funcionar daqui em diante. Eu estava sempre obtendo o erro:**
+
+```
+channel 3: open failed: connect failed: No route to host
+```
+
+**Tentei trocar os IPs das máquinas como sugerido no Discord mas mesmo assim o tunelamento continuou a dar esse erro e não consegui completar a atividade daqui em diante.**
+
+---
+
+## Fazendo testes com a plataforma
+
+26) Criando uma query que seja executada em todas as máquinas.
+
+27) Configurando packs
+
+E vendo os resultados em JSON.
+
+```
+vagrant@fleet:~$ cat /opt/fleet_logs/osqueryd.results.log
+```
