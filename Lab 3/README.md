@@ -5,7 +5,7 @@
 - **Turma:** 2021
 - **Data:** 19/10/2020
 
-Este relatório também pode ser conferido online (em formato Markdown) pela URL: [URL-AQUI](URL-AQUI)
+Este relatório também pode ser conferido online (em formato Markdown) pela URL: [https://gitlab.com/gitoso/csc-05/-/tree/master/Lab%203](https://gitlab.com/gitoso/csc-05/-/tree/master/Lab%203)
 
 ---
 
