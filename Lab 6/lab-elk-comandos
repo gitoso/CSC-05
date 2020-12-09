@@ -1,0 +1,68 @@
+sudo apt update
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.0-amd64.deb
+sudo dpkg -i elasticsearch-7.10.0-amd64.deb
+sudo systemctl daemon-reload
+sudo systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
+ps aux | grep elastic
+curl -X GET localhost:9200
+sudo cat /var/log/elasticsearch/elasticsearch.log
+sudo journalctl -u elasticsearch -r
+sudo apt install -y openjdk-11-jre
+wget https://artifacts.elastic.co/downloads/logstash/logstash-7.10.0-amd64.deb
+sudo dpkg -i logstash-7.10.0-amd64.deb
+sudo systemctl daemon-reload
+sudo systemctl enable logstash.service
+sudo sed -i "s/\# config.reload.automatic: false/config.reload.automatic: true/g" /etc/logstash/logstash.yml
+sudo sed -i "s/\# config.reload/config.reload/g" /etc/logstash/logstash.yml
+sudo systemctl start logstash.service
+ps aux | grep logstash
+sudo journalctl -u logstash -r
+sudo cat /var/log/logstash/logstash-plain.log
+wget https://artifacts.elastic.co/downloads/kibana/kibana-7.10.0-amd64.deb
+sudo dpkg -i kibana-7.10.0-amd64.deb
+sudo systemctl daemon-reload
+sudo systemctl enable kibana.service
+sudo sed -i "s/\#elasticsearch.hosts/elasticsearch.hosts/g" /etc/kibana/kibana.yml
+sudo sed -i "s/\#server.host: \"localhost/server.host: \"10.16.2.25/g" /etc/kibana/kibana.yml
+sudo systemctl start kibana.service
+sudo journalctl -u kibana -r
+ps -ef | grep kibana
+ssh -L 5601:10.16.2.25:5601 cesar@192.168.15.93
+sudo systemctl stop kibana.service
+sudo systemctl stop elasticsearch.service
+echo 'xpack.security.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'discovery.type: single-node' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+sudo systemctl start elasticsearch.service
+sudo /usr/share/elasticsearch/bin/elasticsearch-setup-passwords interactive
+password
+sudo sed -i "s/\#elasticsearch.username: \"kibana_system/elasticsearch.username: \"kibana/g" /etc/kibana/kibana.yml
+sudo sed -i "s/\#elasticsearch.password: \"pass/elasticsearch.password: \"password/g" /etc/kibana/kibana.yml
+sudo systemctl restart kibana.service
+cd /etc/logstash/
+ls -l conf.d/
+sudo cp /vagrant/template.conf .
+cat template.conf
+sudo tail /var/log/auth.log
+sudo cp /vagrant/authlog.conf conf.d/
+tail /var/log/logstash/logstash-plain.log
+sudo usermod -a -G adm logstash
+sudo systemctl restart logstash.service
+tail /var/log/logstash/logstash-plain.log
+GET _cat/indices
+# index patterns logstash-2020.11.14-000001
+# colocar 1 dia de data de range
+vagrant up winelk
+(New-Object System.Net.WebClient).DownloadFile("https://download.sysinternals.com/files/Sysmon.zip", "C:\Windows\Temp\Sysmon.zip")
+(New-Object System.Net.WebClient).DownloadFile("https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml", "C:\Windows\Temp\sysmonconfig-export.xml")  
+.\Sysmon64.exe -i .\sysmonconfig-export.xml
+(New-Object System.Net.WebClient).DownloadFile("https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.10.0-windows-x86_64.zip", "C:\winlogbeat-7.10.0-windows-x86_64.zip")
+ping 10.16.2.25
+powershell -File .\install-service-winlogbeat.ps1
+Start-Service winlogbeat
+vagrant ssh elk
+cd /etc/logstash/conf.d/
+sudo cp /vagrant/windows.conf .
+tail -f /var/log/logstash/logstash-plain.log
+# create the index pattern winlogbeat
+choco install firefox
