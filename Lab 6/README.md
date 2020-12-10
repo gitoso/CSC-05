@@ -1,5 +1,7 @@
 # Lab 6: Laboratório de Elasticsearch
 
+Esta atividade foi realizada em equipe e o repositório original encontra-se no GitHub. Este é apenas um "mirror". [Repositório Original](https://github.com/gitoso/csc-05-lab6-equipe)
+
 - **Disciplina:** CSC-05: Operações Cibernéticas e Jogos de Guerra Cibernética - Lado Defesa
 - **Alunos:** 
     - Felipe dos Santos Bomfim
@@ -9,7 +11,7 @@
     - Raphael de Vasconcelos Nascimento
 - **Data:** 11/12/2020
 
-Este relatório também pode ser conferido online (em formato Markdown) pela URL: [Laboratório 6: Elasticsearch](...)
+Este relatório também pode ser conferido online (em formato Markdown) pela URL: [Laboratório 6: Elasticsearch](https://github.com/gitoso/csc-05-lab6-equipe)
 
 ---
 
@@ -26,7 +28,11 @@ O Laboratório foi executado no seguinte ambiente:
 
 <!-- vscode-markdown-toc -->
 
-DEPOIS QUE O LAB ACABA EU GERO AUTOMATICAMENTE UMA TOC
+* [Laboratório de Elasticsearch](#LaboratriodeElasticsearch)
+* [Instalação dos Softwares Necessários](#InstalaodosSoftwaresNecessrios)
+* [Adicionando dados de exemplo no Kibana e colocando autenticação](#AdicionandodadosdeexemplonoKibanaecolocandoautenticao)
+* [Capturando dados de autenticação de linux](#Capturandodadosdeautenticaodelinux)
+* [Capturando dados de eventos de sistema do windows](#Capturandodadosdeeventosdesistemadowindows)
 
 <!-- vscode-markdown-toc-config
 	numbering=false
@@ -36,11 +42,11 @@ DEPOIS QUE O LAB ACABA EU GERO AUTOMATICAMENTE UMA TOC
 
 ---
 
-## Laboratório de Elasticsearch
+## <a name='LaboratriodeElasticsearch'></a>Laboratório de Elasticsearch
 
 Voce é o super CISO (Chief information security officer) da sua instituição e está com uma missão de colocar um SIEM para rodar no seu ambiente. Nesse laboratório faremos a instalação completa do ambiente ELK (Elasticseach, Logstash e Kibana) onde faremos monitoração de sistemas de logs do sistema do linux, de eventos de Windows, de regras de firewall e finalmente usaremos os resultados do lab anterior para também dar suporte ao OSQUERY.
 
-### 1) Vamos começar com um cenário simples de instalação do ambiente ELK. Para esse cenário vamos usar 2 VMs contendo em uma máquina que será o ELK e em outra, algo a ser monitorado. Iremos, portanto reaproveitar o Vagrantfile do lab passado. E acionar somente as máquinas que formos necessitando.
+### <a name='VamoscomearcomumcenriosimplesdeinstalaodoambienteELK.Paraessecenriovamosusar2VMscontendoemumamquinaqueseroELKeemoutraalgoasermonitorado.IremosportantoreaproveitaroVagrantfiledolabpassado.Eacionarsomenteasmquinasqueformosnecessitando.'></a>1) Vamos começar com um cenário simples de instalação do ambiente ELK. Para esse cenário vamos usar 2 VMs contendo em uma máquina que será o ELK e em outra, algo a ser monitorado. Iremos, portanto reaproveitar o Vagrantfile do lab passado. E acionar somente as máquinas que formos necessitando.
 
 No diretório do arquivo Vagrantfile.original:
 
@@ -53,9 +59,9 @@ user@suamaquina:~$ vagrant up elk
 **Screenshots**:
 ![](images/1a.png)
 
-## Instalação dos Softwares Necessários
+## <a name='InstalaodosSoftwaresNecessrios'></a>Instalação dos Softwares Necessários
 
-### 2) Seguir até pagina web da Elasticsearch - https://www.elastic.co/elasticsearch/
+### <a name='SeguiratpaginawebdaElasticsearch-https:www.elastic.coelasticsearch'></a>2) Seguir até pagina web da Elasticsearch - https://www.elastic.co/elasticsearch/
 
 
 ```
@@ -118,7 +124,7 @@ O arquivo de log é bem extenso, não vou imprimir. E os últimos dois comandos 
 ![](images/2d.png)
 
 
-### 3) Instalação do Logstash
+### <a name='InstalaodoLogstash'></a>3) Instalação do Logstash
 
 Para a instalação dos próximos programas Logstash e Kibana que são baseados em Java. Caso não seja instalado na mesma máquina do elasticsearch, será necessário instalar o Java Runtime na máquina ELK. Senão o java run time do Elasticsearch permanece sendo usado.
 
@@ -163,7 +169,7 @@ vagrant@elk:~$ sudo cat /var/log/logstash/logstash-plain.log
 ![](images/3c.png)
 ![](images/3d.png)
 
-### 4) Instalação do Kibana
+### <a name='InstalaodoKibana'></a>4) Instalação do Kibana
 
 Kibana é a ferramenta de visualização de dados do elasticsearch. Permite a criação de visualizações e dashboards interessantes. Também escrito em java e tb faz parte do ecossistema de ferramentas da Elastic. Para encontrar o link é só ir na página web da ElasticSearch.
 
@@ -196,15 +202,15 @@ vagrant@elk:~$ sudo journalctl -u kibana -r
 ![](images/4a.png)
 ![](images/4b.png)
 
-### 5) Execução da página web do Kibana, se estiver rodando na mesma máquina host que a VM, pode apontar o browser para http://10.16.2.25:5601, senão fazer uso de túnel ssh -L 5601:10.16.2.25:5601 cesar@192.168.15.93 , e usando o browser apontar para http://localhost:5601.
+### <a name='ExecuodapginawebdoKibanaseestiverrodandonamesmamquinahostqueaVMpodeapontarobrowserparahttp:10.16.2.25:5601senofazerusodetnelssh-L5601:10.16.2.25:5601cesar192.168.15.93eusandoobrowserapontarparahttp:localhost:5601.'></a>5) Execução da página web do Kibana, se estiver rodando na mesma máquina host que a VM, pode apontar o browser para http://10.16.2.25:5601, senão fazer uso de túnel ssh -L 5601:10.16.2.25:5601 cesar@192.168.15.93 , e usando o browser apontar para http://localhost:5601.
 
 ---
 **Screenshots**:
 ![](images/5a.png)
 
-## Adicionando dados de exemplo no Kibana e colocando autenticação
+## <a name='AdicionandodadosdeexemplonoKibanaecolocandoautenticao'></a>Adicionando dados de exemplo no Kibana e colocando autenticação
 
-### 6) Clique em adicionar dados e selecione dados web log apache.
+### <a name='Cliqueemadicionardadoseselecionedadosweblogapache.'></a>6) Clique em adicionar dados e selecione dados web log apache.
 
 Ao selecionar “apache logs”, o kibana vai explicar como configurar o apache para recolher logs e demonstrar as linhas de comando para faze-lo. Depois irá para uma tela com algumas opções de “sample logs”, escolha “Sample web logs” e depois “view data / dashboard”.
 
@@ -214,13 +220,14 @@ A dashboard de logs de apache, que registra os acessos a um servidor web é muit
 **Screenshots**:
 ![](images/6a.png)
 
-### 7) Também é possível navegar nos dados brutos, por meio do menu do Kibana no canto superior esquerdo. Selecione “Discovery”. Veja que os dados são representados de múltiplas maneiras. Tem-se um histograma de eventos. Temos os registros individuais dos eventos com seus vários campos. É possível navegar nesses registros e obter informações detalhadas. É possível realizar busca por tempo nos dados, e busca KQL diretamente nos dados.
+### <a name='TambmpossvelnavegarnosdadosbrutospormeiodomenudoKibananocantosuperioresquerdo.SelecioneDiscovery.Vejaqueosdadossorepresentadosdemltiplasmaneiras.Tem-seumhistogramadeeventos.Temososregistrosindividuaisdoseventoscomseusvrioscampos.possvelnavegarnessesregistroseobterinformaesdetalhadas.possvelrealizarbuscaportemponosdadosebuscaKQLdiretamentenosdados.'></a>7) Também é possível navegar nos dados brutos, por meio do menu do Kibana no canto superior esquerdo. Selecione “Discovery”. Veja que os dados são representados de múltiplas maneiras. Tem-se um histograma de eventos. Temos os registros individuais dos eventos com seus vários campos. É possível navegar nesses registros e obter informações detalhadas. É possível realizar busca por tempo nos dados, e busca KQL diretamente nos dados.
 
 ---
 **Screenshots**:
-![](images/)
+![](images/passo7a.png)
+![](images/passo7b.png)
 
-### 8) Colocando configurações de segurança para acesso ao servidor Elasticsearch e Kibana.
+### <a name='ColocandoconfiguraesdeseguranaparaacessoaoservidorElasticsearcheKibana.'></a>8) Colocando configurações de segurança para acesso ao servidor Elasticsearch e Kibana.
 
 Vamos começar parando os serviços do kibana e elasticsearch para alterar suas configurações.
 
@@ -239,9 +246,9 @@ vagrant@elk:~$ echo 'discovery.type: single-node' | sudo tee -a /etc/elasticsear
 
 ---
 **Screenshots**:
-![](images/)
+![](images/passo8.png)
 
-### 9) Configurando as senhas internas para o serviço do elasticsearch e kibana.
+### <a name='Configurandoassenhasinternasparaoserviodoelasticsearchekibana.'></a>9) Configurando as senhas internas para o serviço do elasticsearch e kibana.
 
 ```
 vagrant@elk:~$ sudo systemctl start elasticsearch.service
@@ -266,32 +273,32 @@ sudo systemctl status kibana.service
 
 ---
 **Screenshots**:
-![](images/)
+![](images/passo9.png)
 
-### 10) Vamos entrar pelo browser e verá que agora é necessário ter login.
+### <a name='Vamosentrarpelobrowsereverqueagoranecessrioterlogin.'></a>10) Vamos entrar pelo browser e verá que agora é necessário ter login.
 
 Entrar com o usuário “elastic” e senha “password” conforme você definiu anteriormente. E vá até o menu principal do Kibana e procure por “Management” no final da lista. Em Management, tem 2 itens importantes, que usaremos depois, “Dev Tools” – ferramenta raiz para interagir com o elasticsearch via comandos de API e Stack Management, onde podemos criar usuários e também criar “index patterns” que serão usados depois para navegar nos dados e popular dashboards.
 
 ---
 **Screenshots**:
-![](images/)
+![](images/passo10.png)
 
-### 11) Criar um usuário para você acessar o elasticsearch. Vai em “Security / Users” e clica no botão Create User.
-
----
-**Screenshots**:
-![](images/)
-
-
-### 12) Pronto, é só dar logout e entrar com usario csc05 com senha password daqui pra frente.
+### <a name='Criarumusurioparavocacessaroelasticsearch.VaiemSecurityUserseclicanobotoCreateUser.'></a>11) Criar um usuário para você acessar o elasticsearch. Vai em “Security / Users” e clica no botão Create User.
 
 ---
 **Screenshots**:
-![](images/)
+![](images/passo11.png)
 
-## Capturando dados de autenticação de linux
 
-### 13) Usaremos o log agregador logstash para capturar dados do arquivo de autenticação do Linux e transportar para o ambiente elasticsearch e kibana.
+### <a name='Prontosdarlogouteentrarcomusariocsc05comsenhapassworddaquiprafrente.'></a>12) Pronto, é só dar logout e entrar com usario csc05 com senha password daqui pra frente.
+
+---
+**Screenshots**:
+![](images/passo12.png)
+
+## <a name='Capturandodadosdeautenticaodelinux'></a>Capturando dados de autenticação de linux
+
+### <a name='UsaremosologagregadorlogstashparacapturardadosdoarquivodeautenticaodoLinuxetransportarparaoambienteelasticsearchekibana.'></a>13) Usaremos o log agregador logstash para capturar dados do arquivo de autenticação do Linux e transportar para o ambiente elasticsearch e kibana.
 
 Todas as configurações de pipelines do logstash ficam descritas no diretório /etc/logstash/conf.d
 
@@ -321,10 +328,11 @@ output {
 
 ---
 **Screenshots**:
-![](images/)
+![](images/13a.png)
+![](images/13b.png)
 
 
-### 14) Ingerir dados de auth.log, o log das autenticação “sudo” e “ssh” do Linux
+### <a name='Ingerirdadosdeauth.logologdasautenticaosudoesshdoLinux'></a>14) Ingerir dados de auth.log, o log das autenticação “sudo” e “ssh” do Linux
 
 Como monitorar logins do sistema, um componente fundamental do gerenciamento de autenticação é monitorar o sistema depois de configurar os usuários e seus acessos. Para isso o Linux registra esses logs em um arquivo chamado /var/log/auth.log que é padrão no Ubuntu.
 
@@ -336,10 +344,10 @@ vagrant@elk:~$ sudo tail /var/log/auth.log
 
 ---
 **Screenshots**:
-![](images/)
+![](images/14.png)
 
 
-### 15) Para aprender como construir esses pipelines no logstash, existe uma farta documentação de plug-ins, com exemplos de configuração no site elasticsearch.
+### <a name='Paraaprendercomoconstruiressespipelinesnologstashexisteumafartadocumentaodeplug-inscomexemplosdeconfiguraonositeelasticsearch.'></a>15) Para aprender como construir esses pipelines no logstash, existe uma farta documentação de plug-ins, com exemplos de configuração no site elasticsearch.
 
 Note que no plugin de input chamado “file”, que faz a leitura de eventos em arquivo, equivalente a um “tail -f”, existe vários parâmetros possíveis para o objeto file, mas o único parâmetro obrigatório é o “path”. E no final da pagina do plugin file tem um exemplo. Vemos que pelo exemplo, os parâmetros são setados pelo símbolo “=>”. No nosso laboratório usaremos um outro parâmetro opcional chamado start_position que é um campo contendo uma string, sendo um desses dois do vetor ["beginning", "end"]. Usaremos o “beginning” para começar a coletar dados desde o início do arquivo.
 
@@ -394,20 +402,24 @@ vagrant@elk:~$ tail /var/log/logstash/logstash-plain.log
 ```
 ---
 **Screenshots**:
-![](images/)
+![](images/15a.png)
+![](images/15c.png)
+![](images/15d.png)
+![](images/15e.png)
+![](images/15f.png)
 
 
-### 16) Verificar que os dados estão sendo enviados para o Elasticsearch.
+### <a name='VerificarqueosdadosestosendoenviadosparaoElasticsearch.'></a>16) Verificar que os dados estão sendo enviados para o Elasticsearch.
 
 No ambiente Kibana, tem uma ferramenta que permite questionar vários aspectos do elasticsearch, através de uma ferramenta de query diretamente em lucene / JSON na API do elasticsearch. Com essa ferramenta, vamos verificar se existe um novo “índice” no elasticsearch. Fica em Management / DevTools. Veja na tela abaixo, que existe um índice novo chamado “logstash-2020.11.14-000001 com 54.6 kb de dados. Entretanto, se você for no “Discover” não vai encontrar os dados crus para manipulação.
 
 
 ---
 **Screenshots**:
-![](images/)
+![](images/16.png)
 
 
-### 17) Criar um index pattern.
+### <a name='Criarumindexpattern.'></a>17) Criar um index pattern.
 
 Vá até “Stack Manangement” e depois procure por “Index Patterns” dentro da aba Kibana.
 
@@ -419,27 +431,31 @@ Com isso, todos os 16 campos de cada evento do auth.log são exportados automati
 
 ---
 **Screenshots**:
-![](images/)
+![](images/17a.png)
+![](images/17b.png)
+![](images/17c.png)
+![](images/17d.png)
 
 
-### 18) Voltar a Home no Kibana e depois no menu, busca KIBANA – DISCOVER. Dessa vez tem uma opção a mais de “index pattern” chamada logstash-*.
+
+### <a name='VoltaraHomenoKibanaedepoisnomenubuscaKIBANADISCOVER.Dessaveztemumaopoamaisdeindexpatternchamadalogstash-.'></a>18) Voltar a Home no Kibana e depois no menu, busca KIBANA – DISCOVER. Dessa vez tem uma opção a mais de “index pattern” chamada logstash-*.
 
 ---
 **Screenshots**:
-![](images/)
+![](images/18.png)
 
 
-### 19) Sucesso na aplicação auth.
+### <a name='Sucessonaaplicaoauth.'></a>19) Sucesso na aplicação auth.
 
 Seria possível segmentar as mensagens de auth.log para obter mais informações úteis como quais comandos deram sudo e quais os acessos ssh. De maneira informativa, essa página web traz esse tipo de execução: https://www.elastic.co/blog/grokking-the-linux-authorization-logs
 
 ---
 **Screenshots**:
-![](images/)
+![](images/19.png)
 
-## Capturando dados de eventos de sistema do windows
+## <a name='Capturandodadosdeeventosdesistemadowindows'></a>Capturando dados de eventos de sistema do windows
 
-### 20) Levantar a maquina Windows e instalar Winlogbeat e Sysmon.
+### <a name='LevantaramaquinaWindowseinstalarWinlogbeateSysmon.'></a>20) Levantar a maquina Windows e instalar Winlogbeat e Sysmon.
 
 ```
 user@suamaquina:~$ vagrant up winelk
@@ -447,17 +463,17 @@ user@suamaquina:~$ vagrant up winelk
 
 ---
 **Screenshots**:
-![](images/)
+![](images/20.png)
 
 
-### 21) Acessar a maquina Windows remotamente (no meu caso via túnel ssh) com ssh -L 3389:10.16.2.20:3389 cesar@192.168.15.93
+### <a name='AcessaramaquinaWindowsremotamentenomeucasoviatnelsshcomssh-L3389:10.16.2.20:3389cesar192.168.15.93'></a>21) Acessar a maquina Windows remotamente (no meu caso via túnel ssh) com ssh -L 3389:10.16.2.20:3389 cesar@192.168.15.93
 
 ---
 **Screenshots**:
-![](images/)
+![](images/21.png)
 
 
-### 22) Precisamos baixar os programas necessários, vamos iniciar pelo Sysmon.
+### <a name='PrecisamosbaixarosprogramasnecessriosvamosiniciarpeloSysmon.'></a>22) Precisamos baixar os programas necessários, vamos iniciar pelo Sysmon.
 
 O Monitor do Sistema (Sysmon) é um serviço do sistema Windows e driver de dispositivo que, uma vez instalado em um sistema, permanece residente durante as reinicializações do sistema para monitorar e registrar a atividade do sistema no log de eventos do Windows. Ele fornece informações detalhadas sobre criações de processos, conexões de rede e alterações na hora de criação de arquivos. Ao coletar os eventos que ele gera usando agentes SIEM e, posteriormente, analisá-los, você pode identificar atividades maliciosas ou anômalas e entender como intrusos e malware operam em sua rede. Ele é parte do site “Windows SysInternals” que é para usuários avançados de Windows.
 
@@ -481,10 +497,11 @@ Descompactar o arquivo zippado do sysmon.zip de c:\windows\temp. Copia o arquivo
 ```
 ---
 **Screenshots**:
-![](images/)
+![](images/22a.png)
+![](images/22b.png)
 
 
-### 23) Instalação do winlogbeats.
+### <a name='Instalaodowinlogbeats.'></a>23) Instalação do winlogbeats.
 
 https://www.elastic.co/downloads/beats/winlogbeat
 
@@ -528,10 +545,11 @@ ping 10.16.2.25
 
 ---
 **Screenshots**:
-![](images/)
+![](images/23a.png)
+![](images/23b.png)
 
 
-### 24) Instalar o winlogbeat como serviço no Windows
+### <a name='InstalarowinlogbeatcomoservionoWindows'></a>24) Instalar o winlogbeat como serviço no Windows
 
 Antes de rodar o script powershell que torna o winlogbeat em serviço, vamos fazer um teste como um daemon local com o arquivo de configuração para ver não tem nenhum erro de configuração.
 
@@ -548,10 +566,11 @@ Start-Service winlogbeat
 
 ---
 **Screenshots**:
-![](images/)
+![](images/24a.png)
+![](images/24b.png)
 
 
-### 25) Finalizar a configuração para receber os dados via LOGSTASH
+### <a name='FinalizaraconfiguraoparareceberosdadosviaLOGSTASH'></a>25) Finalizar a configuração para receber os dados via LOGSTASH
 
 De volta a máquina Linux ELK.
 
@@ -599,31 +618,34 @@ tail -f /var/log/logstash/logstash-plain.log
 
 
 ---
-**Screenshots**:
-![](images/)
+**Screenshots**:<br/>
+![](images/25a.png)
+![](images/25b.png)
 
 
-### 26) Verifique se apareceu o índice no Kibana, em Dev Tools
+### <a name='VerifiqueseapareceuondicenoKibanaemDevTools'></a>26) Verifique se apareceu o índice no Kibana, em Dev Tools
 
 ```
 GET _cat/indices
 ```
 
 ---
-**Screenshots**:
-![](images/)
+**Screenshots**:\
+![](images/26.png)
 
 
-### 27) Em seguida, crie o index pattern com winlogbeat*
+### <a name='Emseguidacrieoindexpatterncomwinlogbeat'></a>27) Em seguida, crie o index pattern com winlogbeat*
 
 Se tiver dado tudo certo, você conseguirá acessar as telas. Onde 258 campos foram reconhecidos.
 
 ---
 **Screenshots**:
-![](images/)
+![](images/27a.png)
+![](images/27b.png)
+![](images/27c.png)
 
 
-### 28) Elaboração de visualizações com os dados
+### <a name='Elaboraodevisualizaescomosdados'></a>28) Elaboração de visualizações com os dados
 
 É possível fazer uma busca pela palavra chave winlog.event_id . Podemos verificar que o evento mais frequente é o 4624: (An account was successfully logged on)
 
@@ -644,11 +666,13 @@ Vamos montar uma visualização com esses dados. Clicar em Kibana / Visualizatio
 - f) Salve o gráfico como “[Windows] Logon by type”
 
 ---
-**Screenshots**:
-![](images/)
+**Screenshots**:<br/>
+![](images/28a.png)
+![](images/28b.png)
+![](images/28c.png)
 
 
-### 29) A próxima visualização vai focar nos processos menos frequentemente executados. Que podem indicar um malware malicioso sendo executado. Para tanto, vá até a janela “Discover” e filtre por event_id : 1. O event_id número 1 é do Sysmon trata-se do “Process Create”, ou seja, um registro quando um programa é executado.
+### <a name='Aprximavisualizaovaifocarnosprocessosmenosfrequentementeexecutados.Quepodemindicarummalwaremaliciososendoexecutado.ParatantovatajanelaDiscoverefiltreporevent_id:1.Oevent_idnmero1doSysmontrata-sedoProcessCreateousejaumregistroquandoumprogramaexecutado.'></a>29) A próxima visualização vai focar nos processos menos frequentemente executados. Que podem indicar um malware malicioso sendo executado. Para tanto, vá até a janela “Discover” e filtre por event_id : 1. O event_id número 1 é do Sysmon trata-se do “Process Create”, ou seja, um registro quando um programa é executado.
 
 Desse ponto iremos fazer um histograma dos menos frequentes, contendo todos os programas executados e os nomes do binários dos processos criados. Vamos montar uma visualização com esses dados. Clicar em Kibana / Visualizations
 
@@ -685,14 +709,15 @@ Salva essa visualização com o nome “[Windows] Process Hierarchy by User”
 
 ---
 **Screenshots**:
-![](images/)
+![](images/29a.png)
+![](images/29b.png)
+![](images/29c.png)
+![](images/29d.png)
 
-
-### 30) Combinando tudo no final, em um único dashboard.
+### <a name='Combinandotudonofinalemumnicodashboard.'></a>30) Combinando tudo no final, em um único dashboard.
 
 Com as 3 visualizações salvas, montar um dashboard é bem tranquilo. Basta acessar Kibana / Dashboard. Create Dashboard. E adicionar as 3 visualizações. Reconfigura para que LFO fica na parte de cima da dashboard e as outras na parte de baixo. Salve essa dashboard com o nome “Threat Hunting Dashboard”.
 
 ---
 **Screenshots**:
-![](images/)
-
+![](images/30.png)
